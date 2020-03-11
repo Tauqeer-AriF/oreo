@@ -1,0 +1,213 @@
+<!doctype html>
+<html class="no-js " lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+<meta name="description" content="Responsive Bootstrap 4 and web Application ui kit.">
+
+<title>:: Oreo Bootstrap4 Admin ::</title>
+<!-- Favicon-->
+<link rel="icon" href="favicon.ico" type="image/x-icon">
+<link rel="stylesheet" href="assets/plugins/bootstrap/css/bootstrap.min.css">
+<!-- Custom Css -->
+<link rel="stylesheet" href="assets/css/main.css">
+<link rel="stylesheet" href="assets/css/color_skins.css">
+
+<style>
+    .material{
+        position: relative;
+        margin-top: 10px;
+        box-shadow: 0px 1px 3.5px 0 rgba(0,0,0,0.2);
+        background-color: #fff;
+        border-radius: 2px;
+        padding: 10px;
+    }
+</style>
+</head>
+<body>
+
+    <section class="content">
+        <div class="block-header">
+            <div class="row">
+                <div class="col-lg-7 col-md-6 col-sm-12">
+                    <h2>Product Detail</h2>
+                </div>
+                <div class="col-lg-5 col-md-6 col-sm-12">
+                    <ul class="breadcrumb float-md-right">
+                        <li class="breadcrumb-item"><a href="index.html"><i class="zmdi zmdi-home"></i> Oreo</a></li>
+                        <li class="breadcrumb-item"><a href="ec-dashboard.html">eCommerce</a></li>
+                        <li class="breadcrumb-item active">Product Detail</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid">
+            <div class="row clearfix">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="body">
+                            <div id="alert_message" style="display: none"></div>
+                            <div class="row">
+                                <div class="preview col-lg-4 col-md-12">
+                                    <div class="preview-pic tab-content">
+                                        <div class="tab-pane active" id="product_1">
+                                            <img src="file:///F:/Project%20_1/oreoadmin-140/oreoadmin-140/html-light/assets/images/ecommerce/1.png" class="img-fluid"/></div>
+                                            <div class="upload">
+                                    <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+                                    <input name="category_image" type="file" class="form-control" id="inputGroupFile01">
+                                </div>
+                                    </div>
+                                </div>
+                                <div class="details col-lg-8 col-md-12">
+                                    <input type="hidden" id="product_id" value="{{$product->id}}">
+                                    <h3 class="product-title m-b-0">{!! $product->product_name !!}</h3>
+                                    <h4 class="price m-t-0">Current Price: <span class="col-amber"><b>Sale Price: {!! $product->sale_price !!}</span>
+                                    </h4>
+                                    <div class="rating">
+                                        <div class="stars">
+                                            <span class="zmdi zmdi-star col-amber"></span>
+                                            <span class="zmdi zmdi-star col-amber"></span>
+                                            <span class="zmdi zmdi-star col-amber"></span>
+                                            <span class="zmdi zmdi-star col-amber"></span>
+                                            <span class="zmdi zmdi-star-outline"></span>
+                                        </div>
+                                        <span class="m-l-10">41 reviews</span>
+                                    </div>
+                                    <hr>
+                                    <p class="product-description">{!! $product->product_description !!}</p>
+                                    <h5 class="sizes">size:
+                                        <span class="size" title="small">Length: {!! $product->length !!}</span>
+                                        <span class="size" title="width">Width: {!! $product->width !!}</span>
+                                        <span class="size" title="height">height: {!! $product->height !!}</span>
+                                    </h5>
+                                    <hr>
+                                    <div class="card">
+                                        <div class="header">
+                                            <h2><strong>Add Category</strong></h2>
+                                            <div class="body">
+                                                <div class="row clearfix">
+                                                    <div class="col-md-12 col-lg-12">
+                                                        <div class="panel-group" id="accordion_1" role="tablist"
+                                                             aria-multiselectable="true">
+                                                            <div class="panel panel-primary" style="margin: 0px">
+                                                                <div class="panel-heading" role="tab" id="headingOne_1">
+                                                                    <h4 class="panel-title"><a role="button"
+                                                                                               data-toggle="collapse"
+                                                                                               data-parent="#accordion_1"
+                                                                                               href="#collapseOne_1"
+                                                                                               aria-expanded="true"
+                                                                                               aria-controls="collapseOne_1">
+                                                                            Categories</a></h4>
+                                                                </div>
+                                                                <div id="collapseOne_1" class="panel-collapse collapse in"
+                                                                     role="tabpanel" aria-labelledby="headingOne_1">
+                                                                    <div class="panel-body">
+                                                                        <select class="form-control show-tick"
+                                                                                name="category_id" id="category_id">
+                                                                            <option>--Parent Category--</option>
+                                                                            @foreach($categories as $cat)
+                                                                                <option value="{{$cat['id']}}"
+                                                                                        class="parent">{{$cat['text']}}</option>
+                                                                                @if(isset($cat['items']) && count($cat['items']) > 0)
+                                                                                    @foreach($cat['items'] as $child)
+
+
+                                                                                        <option value="{{$child['id']}}"
+                                                                                                class="child"
+                                                                                                style="margin-left: 20px">{{$child['text']}}</option>
+                                                                                        @if(isset($child['items']))
+
+                                                                                            <option
+                                                                                                value="{{$child['items']['id']}}"
+                                                                                                class="nestedchild"
+                                                                                                style="margin-left: 40px">{{$child['items']['text']}}</option>
+
+                                                                                        @endif
+                                                                                    @endforeach
+                                                                                @endif
+                                                                            @endforeach
+                                                                        </select>
+                                                                        @foreach($product->categories as $key => $cat)
+                                                                            {{--                                                                        {!! dd($cat,$cat->pivot) !!}--}}
+                                                                            <div class="category material" style="font-size: 22px;" id="category_{{$cat->pivot->category_id}}">
+                                                                                <div>
+                                                                                    <i class="fa fa-folder"></i>
+                                                                                    {{$cat->category_name}}
+                                                                                    <a data-confirm="Remove the Category from the Product?" title="Delete Category" data-remote="true" rel="nofollow" data-method="delete" href="/stagedtosell/category_assignments/341178">
+                                                                                        <i class="fa fa-times-circle"></i>
+                                                                                    </a>
+                                                                                </div>
+                                                                            </div>
+                                                                        @endforeach
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-12 col-md-12 ">
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <script>
+        $(document).ready(function () {
+            $('#category_id').change(function () {
+                // console.log($(this).val());
+                $.ajax({
+                    url: "{{route('products.assignCategory') }}",
+                    type: 'POST',
+                    datatype:'json',
+                    data: {
+                        "_token": "{{ csrf_token() }}",
+                        'category_id': $(this).val(),
+                        'product_id': $('#product_id').val(),
+                    },
+                    success: function(response){
+                        if(response.data == null){
+                            if(response.status == false){
+                                $('#alert_message').html('<div class="alert alert-danger">' +
+                                    '<strong>Oh snap!</strong>'+response.message+'' +
+                                    '</div>');
+                                $('#alert_message').css('display','block');
+                                // $('body').scrollTo('#alert_message');
+                            }else{
+                                $('#alert_message').html('<div class="alert alert-danger">' +
+                                    '<strong>Oh snap!</strong>'+response.message+'' +
+                                    '</div>');
+                                $('#alert_message').css('display','block');
+
+                            }
+                        }else{
+                            $('#alert_message').html('<div class="alert alert-success">' +
+                                '<strong>Oh snap!</strong>'+response.message+'' +
+                                '</div>');
+                            $('#alert_message').css('display','block');
+                            $("#category_id").after(response.data);
+                            // $('body').scrollTo('#alert_message');
+                        }
+                        $("html, body").animate({
+                            scrollTop: $('body').scrollTo('#alert_message')
+                        }, 9000);
+                    }
+                });
+
+            })
+        })
+
+    </script>
+
+</body>
+</html>
